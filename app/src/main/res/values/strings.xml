@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ft_hangouts</string>
     <string name="add_contact_button">Add contact</string>
-    <string name="add_details_of_new_contact">Add details of new contact</string>
+    <string name="create_contact_button">Create contact</string>
     <string name="hint_name">Name</string>
     <string name="hint_phone_number">Phone number</string>
     <string name="hint_email">Email</string>
