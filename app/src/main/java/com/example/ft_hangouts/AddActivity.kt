@@ -15,7 +15,7 @@ class AddActivity : AppCompatActivity() {
 
         val binding = ActivityAddBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.setDisplayShowTitleEnabled(false);
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         binding.createContactButton.setOnClickListener {
 
@@ -26,7 +26,7 @@ class AddActivity : AppCompatActivity() {
             if (name.isNotEmpty() && number.isNotEmpty()) {
                 val db = DataBaseHelper(this)
 
-                if (!db.addContact(ContactModel(name, number, email))) {
+                if (!db.addContact(name, number, email)) {
                     Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show()
                 } else {
                     val intent = Intent(this, MainActivity::class.java)

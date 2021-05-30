@@ -8,4 +8,9 @@
     <string name="error">An error occurred</string>
     <string name="name_and_phone_required">Name and phone number are required</string>
     <string name="edit_contact">Edit contact</string>
+    <string name="delete_contact">Delete contact</string>
+    <string name="updated_contact">Updated contact</string>
+    <string name="deleted_contact">Deleted contact</string>
+    <string name="phone_icon">Phone icon</string>
+    <string name="email_icon">Email icon</string>
 </resources>

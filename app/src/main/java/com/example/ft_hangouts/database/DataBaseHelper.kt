@@ -12,7 +12,7 @@ class DataBaseHelper(
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createTableStatement =
-            "CREATE TABLE $CONTACTS_TABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, $NAME TEXT, $NUMBER TEXT, $EMAIL TEXT)"
+            "CREATE TABLE $CONTACTS_TABLE ($ID INTEGER PRIMARY KEY, $NAME TEXT, $NUMBER TEXT, $EMAIL TEXT)"
 
         db?.execSQL(createTableStatement)
     }
@@ -21,13 +21,13 @@ class DataBaseHelper(
         TODO("Not yet implemented")
     }
 
-    fun addContact(contact: ContactModel): Boolean {
+    fun addContact(name: String, number: String, email: String): Boolean {
         val db = this.writableDatabase
         val cv = ContentValues()
 
-        cv.put(NAME, contact.name)
-        cv.put(NUMBER, contact.number)
-        cv.put(EMAIL, contact.email)
+        cv.put(NAME, name)
+        cv.put(NUMBER, number)
+        cv.put(EMAIL, email)
 
         return db.insert(CONTACTS_TABLE, null, cv) >= 0
     }
@@ -39,11 +39,11 @@ class DataBaseHelper(
         val cursor = db.rawQuery(query, null)
 
         while (cursor.moveToNext()) {
-            //val id = cursor.getInt(0)
+            val id = cursor.getInt(0)
             val name = cursor.getString(1)
             val number = cursor.getString(2)
             val email = cursor.getString(3)
-            list.add(ContactModel(name, number, email))
+            list.add(ContactModel(id, name, number, email))
         }
 
         cursor.close()
@@ -51,7 +51,68 @@ class DataBaseHelper(
         return list
     }
 
+    fun getContact(contactId: Int): ContactModel {
+        val query = """
+            SELECT * FROM $CONTACTS_TABLE
+            WHERE $ID = $contactId;
+        """
+        val db = this.readableDatabase
+        val cursor = db.rawQuery(query, null)
+
+        cursor.moveToNext()
+        val id = cursor.getInt(0)
+        val name = cursor.getString(1)
+        val number = cursor.getString(2)
+        val email = cursor.getString(3)
+
+        return ContactModel(id, name, number, email)
+    }
+
+    fun updateName(id: Int, name: String) {
+        val query = """
+            UPDATE $CONTACTS_TABLE
+            SET $NAME = '$name'
+            WHERE $ID = $id;
+        """
+        val db = this.writableDatabase
+        db.execSQL(query)
+        db.close()
+    }
+
+    fun updateEmail(id: Int, email: String) {
+        val query = """
+            UPDATE $CONTACTS_TABLE
+            SET $EMAIL = '$email'
+            WHERE $ID = $id;
+        """
+        val db = this.writableDatabase
+        db.execSQL(query)
+        db.close()
+    }
+
+    fun updateNumber(id: Int, number: String) {
+        val query = """
+            UPDATE $CONTACTS_TABLE
+            SET $NUMBER = '$number'
+            WHERE $ID = $id;
+        """
+        val db = this.writableDatabase
+        db.execSQL(query)
+        db.close()
+    }
+
+    fun deleteContact(id: Int) {
+        val query = """
+            DELETE FROM $CONTACTS_TABLE
+            WHERE $ID = $id
+        """
+        val db = this.writableDatabase
+        db.execSQL(query)
+        db.close()
+    }
+
     companion object {
+        const val ID = "ID"
         const val NAME = "NAME"
         const val NUMBER = "NUMBER"
         const val EMAIL = "EMAIL"

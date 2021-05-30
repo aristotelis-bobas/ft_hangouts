@@ -36,14 +36,17 @@ class ContactAdapter(
         holder.textView.text = contact.name
 
         holder.itemView.setOnClickListener {
+            //Toast.makeText(context, "contact.id in ContactAdapter: $contact.id", Toast.LENGTH_SHORT).show()
             val intent = Intent(context, ContactActivity::class.java)
-            intent.putExtra("id", position)
+            intent.putExtra("contactId", contact.id)
             context.startActivity(intent)
         }
 
         holder.textView.setOnClickListener {
+            val contactId = contact.id
+            //Toast.makeText(context, "contact.id in ContactAdapter: $contactId", Toast.LENGTH_SHORT).show()
             val intent = Intent(context, ContactActivity::class.java)
-            intent.putExtra("id", position)
+            intent.putExtra("contactId", contactId)
             context.startActivity(intent)
         }
     }

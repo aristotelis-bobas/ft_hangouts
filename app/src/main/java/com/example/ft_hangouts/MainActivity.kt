@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ft_hangouts.adapter.ContactAdapter
@@ -30,6 +31,14 @@ class MainActivity : AppCompatActivity() {
         val recyclerView = binding.contactsRecyclerView
         recyclerView.adapter = ContactAdapter(this, contacts)
         recyclerView.setHasFixedSize(true)
+    }
+
+    override fun onResume() {
+        val contacts = DataBaseHelper(this).getContacts()
+        val recyclerView = binding.contactsRecyclerView
+        recyclerView.adapter = ContactAdapter(this, contacts)
+        recyclerView.setHasFixedSize(true)
+        super.onResume()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
