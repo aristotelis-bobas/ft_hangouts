@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ft_hangouts</string>
+    <string name="app_name">Hangouts</string>
     <string name="add_contact_button">Add contact</string>
     <string name="create_contact_button">Create contact</string>
     <string name="hint_name">Name</string>
@@ -7,4 +7,5 @@
     <string name="hint_email">Email</string>
     <string name="error">An error occurred</string>
     <string name="name_and_phone_required">Name and phone number are required</string>
+    <string name="placeholder">placeholder</string>
 </resources>

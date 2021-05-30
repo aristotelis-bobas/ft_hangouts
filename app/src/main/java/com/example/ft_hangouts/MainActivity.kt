@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.example.ft_hangouts.adapter.ContactAdapter
 import com.example.ft_hangouts.database.DataBaseHelper
 import com.example.ft_hangouts.databinding.ActivityMainBinding
