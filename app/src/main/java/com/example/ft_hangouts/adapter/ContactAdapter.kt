@@ -6,11 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ft_hangouts.ContactActivity
-import com.example.ft_hangouts.MainActivity
 import com.example.ft_hangouts.R
 import com.example.ft_hangouts.R.layout.contacts_list_item
 import com.example.ft_hangouts.model.ContactModel

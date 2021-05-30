@@ -1,12 +1,9 @@
 package com.example.ft_hangouts
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.view.View
 import android.widget.Toast
-import com.example.ft_hangouts.R.layout.activity_main
+import androidx.appcompat.app.AppCompatActivity
 import com.example.ft_hangouts.database.DataBaseHelper
 import com.example.ft_hangouts.databinding.ActivityEditBinding
 
@@ -25,7 +22,11 @@ class EditActivity : AppCompatActivity() {
             val contact = DataBaseHelper(this).getContact(id)
             binding.nameOfContact.hint = contact.name
             binding.phoneNumberOfContact.hint = contact.number
-            binding.emailOfContact.hint = contact.email
+            if (contact.email.isEmpty()) {
+                binding.emailOfContact.hint = "Enter email"
+            } else {
+                binding.emailOfContact.hint = contact.email
+            }
 
             binding.editContactButton.setOnClickListener {
                 val name = binding.nameOfContact.text.toString()

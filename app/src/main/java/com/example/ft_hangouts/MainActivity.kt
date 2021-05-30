@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ft_hangouts.adapter.ContactAdapter
@@ -21,6 +20,8 @@ class MainActivity : AppCompatActivity() {
         val requestPermissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
         requestPermissionLauncher.launch(Manifest.permission.CALL_PHONE)
+        requestPermissionLauncher.launch(Manifest.permission.RECEIVE_SMS)
+        requestPermissionLauncher.launch(Manifest.permission.SEND_SMS)
 
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)

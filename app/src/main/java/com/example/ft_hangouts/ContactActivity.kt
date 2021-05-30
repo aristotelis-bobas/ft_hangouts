@@ -1,11 +1,12 @@
 package com.example.ft_hangouts
 
+import android.app.PendingIntent
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.telephony.SmsManager
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ft_hangouts.database.DataBaseHelper
 import com.example.ft_hangouts.databinding.ActivityContactBinding
@@ -47,6 +48,16 @@ class ContactActivity : AppCompatActivity() {
                 }
             }
         }
+
+        binding.sendMessageButton.setOnClickListener {
+            val message = binding.sendMessageText.text.toString()
+            val intent = Intent(this, ContactActivity::class.java)
+            intent.putExtra("contactId", contact.id)
+            val pi = PendingIntent.getActivity(this, 0, intent, 0)
+            val sms: SmsManager = SmsManager.getDefault()
+            sms.sendTextMessage(contact.number, null, message, pi, null)
+        }
+
         setContentView(binding.root)
         supportActionBar?.setDisplayShowTitleEnabled(false)
     }
@@ -58,12 +69,11 @@ class ContactActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
-        val contactId = contact.id
 
         if (id == R.id.edit_contact_button) {
             val intent = Intent(this, EditActivity::class.java)
-            //Toast.makeText(this, "contact.id in ContactActivity intent: $contactId", Toast.LENGTH_SHORT).show()
-            intent.putExtra("contactId", contactId)
+            //Toast.makeText(this, "contact.id in ContactActivity intent: $contact.id", Toast.LENGTH_SHORT).show()
+            intent.putExtra("contactId", contact.id)
             startActivity(intent)
             return true
         }

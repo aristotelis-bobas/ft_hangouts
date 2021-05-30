@@ -13,4 +13,5 @@
     <string name="deleted_contact">Deleted contact</string>
     <string name="phone_icon">Phone icon</string>
     <string name="email_icon">Email icon</string>
+    <string name="enter_message">Enter message</string>
 </resources>
