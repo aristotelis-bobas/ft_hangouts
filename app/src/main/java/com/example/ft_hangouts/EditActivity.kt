@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.ft_hangouts.database.DataBaseHelper
+import com.example.ft_hangouts.database.ContactsDatabaseHelper
 import com.example.ft_hangouts.databinding.ActivityEditBinding
 
 class EditActivity : AppCompatActivity() {
@@ -19,7 +19,7 @@ class EditActivity : AppCompatActivity() {
         //Toast.makeText(this, "contact.id in EditActivity create: $id", Toast.LENGTH_SHORT).show()
 
         if (id != null) {
-            val contact = DataBaseHelper(this).getContact(id)
+            val contact = ContactsDatabaseHelper(this).getContact(id)
             binding.nameOfContact.hint = contact.name
             binding.phoneNumberOfContact.hint = contact.number
             if (contact.email.isEmpty()) {
@@ -32,7 +32,7 @@ class EditActivity : AppCompatActivity() {
                 val name = binding.nameOfContact.text.toString()
                 val number = binding.phoneNumberOfContact.text.toString()
                 val email = binding.emailOfContact.text.toString()
-                val db = DataBaseHelper(this)
+                val db = ContactsDatabaseHelper(this)
 
                 if (name.isNotEmpty()) {
                     db.updateName(contact.id, name)
@@ -51,7 +51,7 @@ class EditActivity : AppCompatActivity() {
             }
 
             binding.deleteContactButton.setOnClickListener {
-                val db = DataBaseHelper(this)
+                val db = ContactsDatabaseHelper(this)
                 db.deleteContact(contact.id)
                 Toast.makeText(this, getString(R.string.deleted_contact), Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainActivity::class.java)

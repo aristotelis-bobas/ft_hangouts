@@ -4,9 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.ft_hangouts.database.DataBaseHelper
+import com.example.ft_hangouts.database.ContactsDatabaseHelper
 import com.example.ft_hangouts.databinding.ActivityAddBinding
-import com.example.ft_hangouts.model.ContactModel
 
 class AddActivity : AppCompatActivity() {
 
@@ -24,7 +23,7 @@ class AddActivity : AppCompatActivity() {
             val email = binding.emailOfContact.text.toString()
 
             if (name.isNotEmpty() && number.isNotEmpty()) {
-                val db = DataBaseHelper(this)
+                val db = ContactsDatabaseHelper(this)
 
                 if (!db.addContact(name, number, email)) {
                     Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show()

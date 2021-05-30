@@ -8,7 +8,7 @@ import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ft_hangouts.adapter.ContactAdapter
-import com.example.ft_hangouts.database.DataBaseHelper
+import com.example.ft_hangouts.database.ContactsDatabaseHelper
 import com.example.ft_hangouts.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -17,25 +17,26 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
+        super.onCreate(savedInstanceState)
+
         val requestPermissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
         requestPermissionLauncher.launch(Manifest.permission.CALL_PHONE)
-        requestPermissionLauncher.launch(Manifest.permission.RECEIVE_SMS)
+        requestPermissionLauncher.launch(Manifest.permission.READ_SMS)
         requestPermissionLauncher.launch(Manifest.permission.SEND_SMS)
 
-        super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setDisplayShowTitleEnabled(false);
 
-        val contacts = DataBaseHelper(this).getContacts()
+        val contacts = ContactsDatabaseHelper(this).getContacts()
         val recyclerView = binding.contactsRecyclerView
         recyclerView.adapter = ContactAdapter(this, contacts)
         recyclerView.setHasFixedSize(true)
     }
 
     override fun onResume() {
-        val contacts = DataBaseHelper(this).getContacts()
+        val contacts = ContactsDatabaseHelper(this).getContacts()
         val recyclerView = binding.contactsRecyclerView
         recyclerView.adapter = ContactAdapter(this, contacts)
         recyclerView.setHasFixedSize(true)

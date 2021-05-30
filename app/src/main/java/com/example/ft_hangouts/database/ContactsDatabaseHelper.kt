@@ -6,13 +6,18 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.ft_hangouts.model.ContactModel
 
-class DataBaseHelper(
+class ContactsDatabaseHelper(
     context: Context?,
 ) : SQLiteOpenHelper(context, "contacts.db", null, 1) {
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createTableStatement =
-            "CREATE TABLE $CONTACTS_TABLE ($ID INTEGER PRIMARY KEY, $NAME TEXT, $NUMBER TEXT, $EMAIL TEXT)"
+            """CREATE TABLE $CONTACTS_TABLE (
+                $ID INTEGER PRIMARY KEY,
+                $NAME TEXT, 
+                $NUMBER TEXT, 
+                $EMAIL TEXT
+            )"""
 
         db?.execSQL(createTableStatement)
     }

@@ -7,8 +7,9 @@ import android.os.Bundle
 import android.telephony.SmsManager
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.ft_hangouts.database.DataBaseHelper
+import com.example.ft_hangouts.database.ContactsDatabaseHelper
 import com.example.ft_hangouts.databinding.ActivityContactBinding
 import com.example.ft_hangouts.model.ContactModel
 
@@ -22,10 +23,9 @@ class ContactActivity : AppCompatActivity() {
 
         val binding = ActivityContactBinding.inflate(layoutInflater)
         val id = intent?.extras?.getInt("contactId")
-        //Toast.makeText(this, "contact.id in ContactActivity create: $id", Toast.LENGTH_SHORT).show()
 
         if (id != null) {
-            contact = DataBaseHelper(this).getContact(id)
+            contact = ContactsDatabaseHelper(this).getContact(id)
             binding.contactName.text = contact.name
             binding.contactEmailAddress.text = contact.email
             binding.contactPhoneNumber.text = contact.number
@@ -47,6 +47,26 @@ class ContactActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
             }
+        }
+
+        val cursor =
+            contentResolver.query(
+                Uri.parse("content://sms/inbox"),
+                null,
+                null,
+                null,
+                null
+            )
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                var string = String()
+                for (i in 0..cursor.columnCount - 1) {
+                    string += cursor.getColumnName(i) + ": " + cursor.getString(i) + "\n"
+                }
+                Toast.makeText(this, string, Toast.LENGTH_LONG).show()
+            }
+            cursor.close()
         }
 
         binding.sendMessageButton.setOnClickListener {
