@@ -9,20 +9,26 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.ft_hangouts.adapter.ContactAdapter
+import com.example.ft_hangouts.adapter.MessageAdapter
 import com.example.ft_hangouts.database.ContactsDatabaseHelper
 import com.example.ft_hangouts.databinding.ActivityContactBinding
+import com.example.ft_hangouts.datasource.MessagesSource
 import com.example.ft_hangouts.model.ContactModel
 
 
 class ContactActivity : AppCompatActivity() {
 
     private lateinit var contact: ContactModel
+    private lateinit var binding: ActivityContactBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = ActivityContactBinding.inflate(layoutInflater)
+        binding = ActivityContactBinding.inflate(layoutInflater)
         val id = intent?.extras?.getInt("contactId")
+        setContentView(binding.root)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         if (id != null) {
             contact = ContactsDatabaseHelper(this).getContact(id)
@@ -47,39 +53,20 @@ class ContactActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
             }
-        }
+            val messages = MessagesSource(contact).getMessages(contentResolver)
+            val recyclerView = binding.messagesRecyclerView
+            recyclerView.adapter = MessageAdapter(this, messages.reversed())
+            recyclerView.setHasFixedSize(true)
 
-        val cursor =
-            contentResolver.query(
-                Uri.parse("content://sms/inbox"),
-                null,
-                null,
-                null,
-                null
-            )
-
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                var string = String()
-                for (i in 0..cursor.columnCount - 1) {
-                    string += cursor.getColumnName(i) + ": " + cursor.getString(i) + "\n"
-                }
-                Toast.makeText(this, string, Toast.LENGTH_LONG).show()
+            binding.sendMessageButton.setOnClickListener {
+                val message = binding.sendMessageText.text.toString()
+                val intent = Intent(this, ContactActivity::class.java)
+                intent.putExtra("contactId", ContactsDatabaseHelper(this).getContact(id).id)
+                val sms: SmsManager = SmsManager.getDefault()
+                sms.sendTextMessage(contact.number, null, message, null, null)
+                startActivity(intent)
             }
-            cursor.close()
         }
-
-        binding.sendMessageButton.setOnClickListener {
-            val message = binding.sendMessageText.text.toString()
-            val intent = Intent(this, ContactActivity::class.java)
-            intent.putExtra("contactId", contact.id)
-            val pi = PendingIntent.getActivity(this, 0, intent, 0)
-            val sms: SmsManager = SmsManager.getDefault()
-            sms.sendTextMessage(contact.number, null, message, pi, null)
-        }
-
-        setContentView(binding.root)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

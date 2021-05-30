@@ -16,7 +16,7 @@ class MessagesSource(
         val list = mutableListOf<MessageModel>()
         val cursor =
             contentResolver.query(
-                Uri.parse("content://sms/inbox"),
+                Uri.parse("content://sms/"),
                 null,
                 null,
                 null,
@@ -32,7 +32,7 @@ class MessagesSource(
                     val id = cursor.getString(cursor.getColumnIndex("_id"))
                     val message = cursor.getString(cursor.getColumnIndex("body"))
                     val date = cursor.getString(cursor.getColumnIndex("date"))
-                    val received = cursor.getString(cursor.getColumnIndex("type")).contains("1")
+                    val received = cursor.getString(cursor.getColumnIndex("type")).toInt() == 1
                     list.add(MessageModel(id, address, message, date, received))
                 } while (cursor.moveToNext())
             }
