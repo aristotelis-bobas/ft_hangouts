@@ -5,4 +5,6 @@
     <string name="hint_name">Name</string>
     <string name="hint_phone_number">Phone number</string>
     <string name="hint_email">Email</string>
+    <string name="error">An error occurred</string>
+    <string name="name_and_phone_required">Name and phone number are required</string>
 </resources>
