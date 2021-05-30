@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:clickable="true"
-        android:text="@string/placeholder"
         android:textAppearance="?attr/textAppearanceHeadline6" />
 
 </com.google.android.material.card.MaterialCardView>

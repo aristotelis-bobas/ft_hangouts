@@ -7,5 +7,5 @@
     <string name="hint_email">Email</string>
     <string name="error">An error occurred</string>
     <string name="name_and_phone_required">Name and phone number are required</string>
-    <string name="placeholder">placeholder</string>
+    <string name="edit_contact">Edit contact</string>
 </resources>

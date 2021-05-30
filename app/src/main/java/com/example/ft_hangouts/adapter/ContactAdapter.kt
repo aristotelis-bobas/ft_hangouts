@@ -1,12 +1,16 @@
 package com.example.ft_hangouts.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ft_hangouts.ContactActivity
+import com.example.ft_hangouts.MainActivity
 import com.example.ft_hangouts.R
 import com.example.ft_hangouts.R.layout.contacts_list_item
 import com.example.ft_hangouts.model.ContactModel
@@ -32,11 +36,15 @@ class ContactAdapter(
         holder.textView.text = contact.name
 
         holder.itemView.setOnClickListener {
-            Toast.makeText(context, "CARD", Toast.LENGTH_SHORT).show()
+            val intent = Intent(context, ContactActivity::class.java)
+            intent.putExtra("id", position)
+            context.startActivity(intent)
         }
 
         holder.textView.setOnClickListener {
-            Toast.makeText(context, "TEXT", Toast.LENGTH_SHORT).show()
+            val intent = Intent(context, ContactActivity::class.java)
+            intent.putExtra("id", position)
+            context.startActivity(intent)
         }
     }
 
